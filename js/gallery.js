@@ -44,7 +44,7 @@ elemRefs.gallery.addEventListener('click', event => {
   // Listener on the close button for close modal
   elemRefs.closeBtn.addEventListener('click', () => {
     closeLightBox();
-    window.removeEventListener('keyup', controlKeybordEvents);
+    window.removeEventListener('keyup', controlKeyboardEvents);
   });
   // Listener on the modal window for close modal
   elemRefs.modal.addEventListener('click', event => {
@@ -52,9 +52,9 @@ elemRefs.gallery.addEventListener('click', event => {
       return;
     }
     closeLightBox();
-    window.removeEventListener('keyup', controlKeybordEvents);
+    window.removeEventListener('keyup', controlKeyboardEvents);
   });
-  window.addEventListener('keyup', controlKeybordEvents);
+  window.addEventListener('keyup', controlKeyboardEvents);
 });
 
 function setModalImageAttribute(index, step) {
@@ -63,10 +63,10 @@ function setModalImageAttribute(index, step) {
   elemRefs.modalImage.dataset.ind = `${index + step}`;
   console.log(elemRefs.modalImage.dataset.ind);
 }
-function controlKeybordEvents(event) {
+function controlKeyboardEvents(event) {
   if (event.code === 'Escape') {
     closeLightBox();
-    window.removeEventListener('keyup', controlKeybordEvents);
+    window.removeEventListener('keyup', controlKeyboardEvents);
   }
   if (event.code === 'ArrowRight') {
     pressRight();
