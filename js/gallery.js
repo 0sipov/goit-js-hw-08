@@ -64,7 +64,6 @@ function setModalImageAttribute(index, step) {
 function controlKeyboardEvents(event) {
   if (event.code === 'Escape') {
     closeLightBox();
-    window.removeEventListener('keyup', controlKeyboardEvents);
   }
   if (event.code === 'ArrowRight') {
     pressRight();
