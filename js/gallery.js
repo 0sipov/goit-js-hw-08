@@ -28,12 +28,11 @@ const galleryMarkup = galleryItems
   .join();
 // Adding items to the markup
 elemRefs.gallery.innerHTML = galleryMarkup;
-
 // Adding listeners
 elemRefs.gallery.addEventListener('click', event => {
   // Disable the following image link
   event.preventDefault();
-  if (event.target.tagName != 'IMG') return;
+  if (event.target.tagName !== 'IMG') return;
   //Adding class 'is-open' to modal window
   elemRefs.modal.classList.add('is-open');
   // Adding an image id to the modal dataset from the gallery item where the event happened
@@ -42,52 +41,50 @@ elemRefs.gallery.addEventListener('click', event => {
     galleryItems[+elemRefs.modalImage.dataset.ind].description;
   elemRefs.modalImage.src =
     galleryItems[+elemRefs.modalImage.dataset.ind].original;
+  // Listener on the close button for close modal
+  elemRefs.closeBtn.addEventListener('click', () => {
+    closeLightBox();
+  });
+  // Listener on the modal window for close modal
+  elemRefs.modal.addEventListener('click', event => {
+    if (event.target.tagName === 'IMG') {
+      return;
+    }
+    closeLightBox();
+  });
+  window.addEventListener('keyup', controlKeybordEvents);
 });
-// Listener on the close button for close modal
-elemRefs.closeBtn.addEventListener('click', () => {
-  elemRefs.modal.classList.remove('is-open');
-  elemRefs.modalImage.src = '';
-});
-// Listener on the modal window for close modal
-elemRefs.modal.addEventListener('click', () => {
-  elemRefs.modal.classList.remove('is-open');
-  elemRefs.modalImage.src = '';
-});
-// Listener on the 'escape' button for close modal
-window.addEventListener('keyup', event => {
-  if (event.code === 'Escape') {
-    elemRefs.modal.classList.remove('is-open');
-    elemRefs.modalImage.src = '';
-  }
-});
-// Listener on the 'ArrowRight' button
-window.addEventListener('keyup', event => {
-  if (event.code === 'ArrowRight') {
-    pressRight();
-  }
-});
-// Listener on the 'ArrowLeft' button
-window.addEventListener('keyup', event => {
-  if (event.code === 'ArrowLeft') {
-    pressLeft();
-  }
-});
+
 function setModalImageAttribute(index, step) {
-  console.log(step, index);
   elemRefs.modalImage.src = galleryItems[index + step].original;
   elemRefs.modalImage.alt = galleryItems[index + step].alt;
   elemRefs.modalImage.dataset.ind = `${index + step}`;
   console.log(elemRefs.modalImage.dataset.ind);
 }
+function controlKeybordEvents(event) {
+  if (event.code === 'Escape') {
+    closeLightBox();
+    window.removeEventListener('keyup', callBack(event));
+  }
+  if (event.code === 'ArrowRight') {
+    pressRight();
+  }
+  if (event.code === 'ArrowLeft') {
+    pressLeft();
+  }
+}
+function closeLightBox() {
+  elemRefs.modal.classList.remove('is-open');
+  elemRefs.modalImage.src = '';
+  elemRefs.modalImage.alt = '';
+}
 function pressRight() {
-  let index = +elemRefs.modalImage.dataset.ind;
-  if (index === +galleryItems.length - 1) return;
-  // console.log(index);
+  let index = Number(elemRefs.modalImage.dataset.ind);
+  if (index === galleryItems.length - 1) return;
   setModalImageAttribute(index, 1);
 }
 function pressLeft() {
   let index = +elemRefs.modalImage.dataset.ind;
   if (index === 0) return;
-  // console.log(index);
   setModalImageAttribute(index, -1);
 }
