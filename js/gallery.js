@@ -44,6 +44,7 @@ elemRefs.gallery.addEventListener('click', event => {
   // Listener on the close button for close modal
   elemRefs.closeBtn.addEventListener('click', () => {
     closeLightBox();
+    window.removeEventListener('keyup', controlKeybordEvents);
   });
   // Listener on the modal window for close modal
   elemRefs.modal.addEventListener('click', event => {
@@ -51,6 +52,7 @@ elemRefs.gallery.addEventListener('click', event => {
       return;
     }
     closeLightBox();
+    window.removeEventListener('keyup', controlKeybordEvents);
   });
   window.addEventListener('keyup', controlKeybordEvents);
 });
@@ -64,7 +66,7 @@ function setModalImageAttribute(index, step) {
 function controlKeybordEvents(event) {
   if (event.code === 'Escape') {
     closeLightBox();
-    window.removeEventListener('keyup', callBack(event));
+    window.removeEventListener('keyup', controlKeybordEvents);
   }
   if (event.code === 'ArrowRight') {
     pressRight();
