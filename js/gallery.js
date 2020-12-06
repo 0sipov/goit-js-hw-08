@@ -25,7 +25,7 @@ const galleryMarkup = galleryItems
       </a>
     </li>`;
   })
-  .join();
+  .join('');
 // Adding items to the markup
 elemRefs.gallery.innerHTML = galleryMarkup;
 // Adding listeners
@@ -44,7 +44,6 @@ elemRefs.gallery.addEventListener('click', event => {
   // Listener on the close button for close modal
   elemRefs.closeBtn.addEventListener('click', () => {
     closeLightBox();
-    window.removeEventListener('keyup', controlKeyboardEvents);
   });
   // Listener on the modal window for close modal
   elemRefs.modal.addEventListener('click', event => {
@@ -52,7 +51,6 @@ elemRefs.gallery.addEventListener('click', event => {
       return;
     }
     closeLightBox();
-    window.removeEventListener('keyup', controlKeyboardEvents);
   });
   window.addEventListener('keyup', controlKeyboardEvents);
 });
@@ -79,6 +77,7 @@ function closeLightBox() {
   elemRefs.modal.classList.remove('is-open');
   elemRefs.modalImage.src = '';
   elemRefs.modalImage.alt = '';
+  window.removeEventListener('keyup', controlKeyboardEvents);
 }
 function pressRight() {
   let index = Number(elemRefs.modalImage.dataset.ind);
